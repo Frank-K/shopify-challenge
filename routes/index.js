@@ -1,15 +1,6 @@
 var express = require('express');
-var mysql = require('mysql');
-require('dotenv').config();
+var pool = require('../database');
 var router = express.Router();
-
-var pool  = mysql.createPool({
-  connectionLimit : 10,
-  host            : process.env.DB_HOST,
-  user            : process.env.DB_USER,
-  password        : process.env.DB_PASS,
-  database        : process.env.DB
-});
 
 /* GET all products. */
 router.get('/product/all?', function(req, res, next) {
@@ -29,6 +20,11 @@ router.get('/product/:id', function(req, res, next) {
   pool.query('SELECT * from products WHERE id = ?', [req.params.id], function (error, results, fields) {
     res.send(results);
   });
+});
+
+/* POST a request to purchase a specific item in the store. */
+router.post('/purchase', function(req, res, next) {
+
 });
 
 module.exports = router;
