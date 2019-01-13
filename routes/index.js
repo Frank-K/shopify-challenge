@@ -11,9 +11,22 @@ var pool  = mysql.createPool({
   database        : process.env.DB
 });
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  pool.query('SELECT * from products', function (error, results, fields) {
+/* GET all products. */
+router.get('/product/all?', function(req, res, next) {
+  if (req.query.available === 'true') {
+    pool.query('SELECT * from products WHERE inventory_count > 0', function (error, results, fields) {
+      res.send(results);
+    });
+  } else {
+    pool.query('SELECT * from products', function (error, results, fields) {
+      res.send(results);
+    });
+  }
+});
+
+/* GET specific product based on id provided. */
+router.get('/product/:id', function(req, res, next) {
+  pool.query('SELECT * from products WHERE id = ?', [req.params.id], function (error, results, fields) {
     res.send(results);
   });
 });
