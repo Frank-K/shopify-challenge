@@ -65,4 +65,52 @@ describe('Routes', function() {
           });
     });
   });
+
+  
+  describe('/product/:id', function() {
+    it('should return 401 when no api key is present in header', function(done) {
+      chai.request(app)
+          .get('/product/1')
+          .end(function(err, res) {
+            expect(res).to.have.status(401);
+            done();
+          });
+    });
+
+    it('should return 200 with item when valid id is given', function(done) {
+      chai.request(app)
+          .get('/product/1')
+          .set('X-API-KEY', 'atLgzBRp4eHn90Dntx393n2QPlzrVscO')
+          .end(function(err, res) {
+            expect(res).to.have.status(200);
+            expect(res.body).with.lengthOf(1);
+            expect(res.body[0]['title']).to.equal('T-Shirt');
+            expect(res.body[0]['price']).to.equal(9.99);
+            expect(res.body[0]['inventory_count']).to.equal(10);
+            done();
+          });
+    });
+
+    it('should return 200 with empty array when id doesn\'t exist', function(done) {
+      chai.request(app)
+          .get('/product/20')
+          .set('X-API-KEY', 'atLgzBRp4eHn90Dntx393n2QPlzrVscO')
+          .end(function(err, res) {
+            expect(res).to.have.status(200);
+            expect(res.body).with.lengthOf(0);
+            done();
+          });
+    });
+
+    it('should return 200 with empty array when id is invalid', function(done) {
+      chai.request(app)
+          .get('/product/asdf')
+          .set('X-API-KEY', 'atLgzBRp4eHn90Dntx393n2QPlzrVscO')
+          .end(function(err, res) {
+            expect(res).to.have.status(200);
+            expect(res.body).with.lengthOf(0);
+            done();
+          });
+    });
+  });
 });
