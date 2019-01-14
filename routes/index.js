@@ -24,7 +24,13 @@ router.get('/product/:id', function(req, res, next) {
 
 /* POST a request to purchase a specific item in the store. */
 router.post('/purchase', function(req, res, next) {
+  pool.query('UPDATE products SET inventory_count = inventory_count - 1 WHERE id = ?', [req.body.id], function (error, results, fields) {
+    if (error || results.affectedRows == 0) {
+      return res.json({'success': 0});
+    }
 
+    return res.json({'success': 1});
+  });
 });
 
 module.exports = router;
