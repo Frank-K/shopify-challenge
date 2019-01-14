@@ -22,6 +22,17 @@ app.use(bodyParser.urlencoded({ extended: true }))
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+// validate api key before doing anything with the request
+app.use(function(req, res, next) {
+  var key = req.get('X-API-KEY');
+
+  if (key === process.env.API_KEY) {
+    next();
+  } else {
+    res.status(401).end();
+  }
+});
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 
