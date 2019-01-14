@@ -26,7 +26,7 @@ router.get('/product/:id', function(req, res, next) {
 router.post('/purchase', function(req, res, next) {
   pool.query('UPDATE products SET inventory_count = inventory_count - 1 WHERE id = ?', [req.body.id], function (error, results, fields) {
     if (error || results.affectedRows == 0) {
-      return res.json({'success': 0});
+      return res.status(400).json({'success': 0});
     }
 
     return res.json({'success': 1});
