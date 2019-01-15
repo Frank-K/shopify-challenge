@@ -44,17 +44,28 @@
 * If no key is provided or thek key provided is invalid the API immediately returns a `401` response.
 * The security measure is implemented as global middlewear that is applied to every request.
 
+### Testing Framework
+* The testing framework used is `Mocha.js`, it provides a simple and easy to use setting for creating and running tests.
+* The `Chai.js` library is also used for assertions and to send `HTTP` requests to the API.
+* Combined the two packages allow for tests to be created quickly and for them to be easily run to verify the functionality of the API.
+
 ## Application Setup
 
 1. Clone the project from the GitHub repository.
-2. Run `npm install`
-3. Run the `database.sql` file in `MySQL` to create the database and insert some data
-4. Fill in the variables in the `.env` file located in the root directory
-5. Run `npm start`
-6. Make requests to `localhost:3000`
+2. Run `npm install`.
+3. Run the `database.sql` file in `MySQL` to create the database and insert some data.
+4. Fill in the variables in the `.env` file located in the root directory.
+5. Run `npm start`.
+6. Make requests to `localhost:3000`.
 7. Have fun!
 
 ## Documentation
 
 ## Testing
+
+1. Run through the `Application Setup` above.
+2. Run the `test_database.sql` file in `MySQL` to create the database for testing.
+3. Change the `DB` variable in the `.env` file to `test_store`.
+4. Run `npm test`. *(Make sure the dev dependencies are installed and the server is running)*
+5. Be sure to "remake" the test database between test runs by doing step `#2` again.
 
