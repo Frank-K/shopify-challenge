@@ -1,7 +1,10 @@
+require('dotenv').config();
+
 var assert = require('assert');
 var expect = require('chai').expect;
 var chai = require('chai');
 var chaiHttp = require('chai-http');
+var pool = require('../database');
 
 var app = 'http://localhost:3000';
 
@@ -112,5 +115,108 @@ describe('Routes', function() {
             done();
           });
     });
+  });
+
+
+  describe('/purchase', function() {
+    it('should return 401 when no api key is present in header', function(done) {
+      chai.request(app)
+          .post('/purchase')
+          .send({id: 1})
+          .end(function(err, res) {
+            expect(res).to.have.status(401);
+            done();
+          });
+    });
+
+    it('should return 200 with success when valid data is sent', function(done) {
+      chai.request(app)
+          .post('/purchase')
+          .set('X-API-KEY', 'atLgzBRp4eHn90Dntx393n2QPlzrVscO')
+          .send({id: 2})
+          .end(function(err, res) {
+            expect(res).to.have.status(200);
+            expect(res.body.success).to.equal(1);
+
+            // pool.query('SELECT * from products WHERE id=2', function (error, results, fields) {
+            //   expect(results[0].inventory_count).to.equal(4);
+            //   done();
+            // });
+
+            done();
+          });
+    });
+
+    it('should return 400 with not successful when invalid id is sent', function(done) {
+      chai.request(app)
+          .post('/purchase')
+          .set('X-API-KEY', 'atLgzBRp4eHn90Dntx393n2QPlzrVscO')
+          .send({id: 20})
+          .end(function(err, res) {
+            expect(res).to.have.status(400);
+            expect(res.body.success).to.equal(0);
+
+            // pool.query('SELECT * from products WHERE id=2', function (error, results, fields) {
+            //   expect(results[0].inventory_count).to.equal(4);
+            //   done();
+            // });
+
+            done();
+          });
+    });
+
+    it('should return 400 with not successful when invalid key is sent in body', function(done) {
+      chai.request(app)
+          .post('/purchase')
+          .set('X-API-KEY', 'atLgzBRp4eHn90Dntx393n2QPlzrVscO')
+          .send({invalid: 1})
+          .end(function(err, res) {
+            expect(res).to.have.status(400);
+            expect(res.body.success).to.equal(0);
+
+            // pool.query('SELECT * from products WHERE id=2', function (error, results, fields) {
+            //   expect(results[0].inventory_count).to.equal(4);
+            //   done();
+            // });
+
+            done();
+          });
+    });
+
+    it('should return 400 with not successful when invalid key and id is sent in body', function(done) {
+      chai.request(app)
+          .post('/purchase')
+          .set('X-API-KEY', 'atLgzBRp4eHn90Dntx393n2QPlzrVscO')
+          .send({invalid: 'invalid'})
+          .end(function(err, res) {
+            expect(res).to.have.status(400);
+            expect(res.body.success).to.equal(0);
+
+            // pool.query('SELECT * from products WHERE id=2', function (error, results, fields) {
+            //   expect(results[0].inventory_count).to.equal(4);
+            //   done();
+            // });
+
+            done();
+          });
+    });
+
+    it('should return 400 with not successful when item with no inventory is purchased', function(done) {
+      chai.request(app)
+          .post('/purchase')
+          .set('X-API-KEY', 'atLgzBRp4eHn90Dntx393n2QPlzrVscO')
+          .send({id: 6})
+          .end(function(err, res) {
+            expect(res).to.have.status(400);
+            expect(res.body.success).to.equal(0);
+
+            // pool.query('SELECT * from products WHERE id=2', function (error, results, fields) {
+            //   expect(results[0].inventory_count).to.equal(4);
+            //   done();
+            // });
+
+            done();
+          });
+    }); 
   });
 });
