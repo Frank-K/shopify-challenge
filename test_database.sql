@@ -1,3 +1,5 @@
+DROP DATABASE test_store;
+
 CREATE DATABASE IF NOT EXISTS test_store;
 
 USE test_store;
