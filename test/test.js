@@ -86,10 +86,9 @@ describe('Routes', function() {
           .set('X-API-KEY', 'atLgzBRp4eHn90Dntx393n2QPlzrVscO')
           .end(function(err, res) {
             expect(res).to.have.status(200);
-            expect(res.body).with.lengthOf(1);
-            expect(res.body[0]['title']).to.equal('T-Shirt');
-            expect(res.body[0]['price']).to.equal(9.99);
-            expect(res.body[0]['inventory_count']).to.equal(10);
+            expect(res.body['title']).to.equal('T-Shirt');
+            expect(res.body['price']).to.equal(9.99);
+            expect(res.body['inventory_count']).to.equal(10);
             done();
           });
     });
@@ -100,7 +99,7 @@ describe('Routes', function() {
           .set('X-API-KEY', 'atLgzBRp4eHn90Dntx393n2QPlzrVscO')
           .end(function(err, res) {
             expect(res).to.have.status(200);
-            expect(res.body).with.lengthOf(0);
+            expect(res.body).to.be.empty;
             done();
           });
     });
@@ -111,7 +110,7 @@ describe('Routes', function() {
           .set('X-API-KEY', 'atLgzBRp4eHn90Dntx393n2QPlzrVscO')
           .end(function(err, res) {
             expect(res).to.have.status(200);
-            expect(res.body).with.lengthOf(0);
+            expect(res.body).to.be.empty;
             done();
           });
     });

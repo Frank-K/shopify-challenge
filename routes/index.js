@@ -18,7 +18,7 @@ router.get('/product/all?', function(req, res, next) {
 /* GET specific product based on id provided. */
 router.get('/product/:id', function(req, res, next) {
   pool.query('SELECT * from products WHERE id = ?', [req.params.id], function (error, results, fields) {
-    res.send(results);
+    res.send(results[0]);
   });
 });
 
