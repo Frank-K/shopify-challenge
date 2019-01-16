@@ -1,0 +1,204 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0",
+    "title": "Shopify Developer Challenge API",
+    "contact": {
+      "email": "frank.karunaratna@gmail.com"
+    },
+    "description": "This is the API documentation for the Shopify Developer Challenge for 2019.\n\nThe default api endpoint is provided on the right."
+  },
+  "host": "localhost:3000",
+  "basePath": "/",
+  "schemes": [
+    "http"
+  ],
+  "securityDefinitions": {
+    "Authorization": {
+      "name": "X-API-KEY",
+      "type": "apiKey",
+      "in": "header"
+    }
+  },
+  "paths": {
+    "/products/all": {
+      "parameters": [
+        {
+          "name": "available",
+          "description": "Whether only available products should be returned.",
+          "in": "query",
+          "type": "boolean"
+        }
+      ],
+      "get": {
+        "description": "Get all the proudcts for the store.**If an invalid url query is provided it will be ignored and all items will be returned.**",
+        "tags": [
+          "Products"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "type": "array",
+              "items": {
+                "$ref": "#/definitions/Product"
+              },
+              "description": "Array of products."
+            }
+          },
+          "401": {
+            "$ref": "#/definitions/401_Response"
+          },
+          "500": {
+            "$ref": "#/definitions/500_Response"
+          }
+        }
+      }
+    },
+    "/products/{id}": {
+      "parameters": [
+        {
+          "name": "id",
+          "description": "The id of the product to be returned.",
+          "in": "path",
+          "type": "integer",
+          "required": true
+        }
+      ],
+      "get": {
+        "description": "Get a specific product from the store.**If an invalid id is provided the server response will be empty.**",
+        "tags": [
+          "Products"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "$ref": "#/definitions/Product"
+            }
+          },
+          "401": {
+            "$ref": "#/definitions/401_Response"
+          },
+          "500": {
+            "$ref": "#/definitions/500_Response"
+          }
+        }
+      }
+    },
+    "/purchase": {
+      "post": {
+        "description": "Purchase a specific item from the store.",
+        "tags": [
+          "Products"
+        ],
+        "consumes": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "id": {
+                  "type": "integer",
+                  "description": "The id of the product to be purchased."
+                }
+              },
+              "required": [
+                "id"
+              ],
+              "example": {
+                "id": 1
+              }
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful request.",
+            "schema": {
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "The status of the purchase."
+                }
+              },
+              "example": {
+                "success": 1
+              }
+            }
+          },
+          "400": {
+            "description": "Unsuccessful request.",
+            "schema": {
+              "properties": {
+                "success": {
+                  "type": "boolean",
+                  "description": "The status of the purchase."
+                }
+              },
+              "example": {
+                "success": 0
+              }
+            }
+          },
+          "401": {
+            "$ref": "#/definitions/401_Response"
+          },
+          "500": {
+            "$ref": "#/definitions/500_Response"
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "Product": {
+      "description": "A product in a generic store.",
+      "properties": {
+        "id": {
+          "type": "integer",
+          "description": "The unique id for the product."
+        },
+        "title": {
+          "type": "string",
+          "description": "The title / name of the product."
+        },
+        "price": {
+          "type": "number",
+          "description": "The price in dollars and cents for the product."
+        },
+        "inventory_count": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "The quantity of this product in inventory."
+        }
+      },
+      "example": {
+        "id": 1,
+        "title": "Sweater",
+        "price": 34.99,
+        "inventory_count": 5
+      }
+    },
+    "401_Response": {
+      "description": "API key is missing or invalid."
+    },
+    "500_Response": {
+      "description": "Unexpected error."
+    }
+  }
+}
