@@ -62,7 +62,8 @@
 ## Documentation
 * Documentation for the API was written using the `OpenAPI/Swagger 2.0` specification and generated using [Spectacle](https://github.com/sourcey/spectacle).
 * The `JSON` file that was used to generate the docs can be found in the `docs` directory of this project under the name `api.json`.
-* The `index.html` file in the home directory of this project contains the documentation.
+* The `index.html` file can also be found in the `docs` folder.
+* The docs are hosted using [GitHub Pages](https://pages.github.com/) and can be found at `https://frank-k.github.io/shopify-challenge/`
 
 
 ## Testing
