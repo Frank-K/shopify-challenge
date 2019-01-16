@@ -3,9 +3,9 @@
 ## Thought Process / Design Decisions
 
 ### Framework Choice
-* I decided to use `Node.js` with the `Express.js` framework to build this project.
-* I have previous experience building REST APIs with `Node.js` and the `Express.js` framework which is why I chose to use them.
-* The `Express.js` framework provides a lot of useful functionality and there are a near infinite amount of packages availabe through `npm` which makes this stack a prime choice for any REST API.
+* I decided to use [Node.js](https://nodejs.org/en/) with the [Express.js](https://expressjs.com/) framework to build this project.
+* I have previous experience building REST APIs with [Node.js](https://nodejs.org/en/) and the [Express.js](https://expressjs.com/) framework which is why I chose to use them.
+* The [Express.js](https://expressjs.com/) framework provides a lot of useful functionality and there are a near infinite amount of packages availabe through [npm](https://www.npmjs.com/), which makes this stack a prime choice for any REST API.
 
 ### Database Design
 * An `AUTO INCREMENT` id is used to reference each row in the products table. This creates a unique id for each product.
@@ -45,8 +45,8 @@
 * The security measure is implemented as global middlewear that is applied to every request.
 
 ### Testing Framework
-* The testing framework used is `Mocha.js`, it provides a simple and easy to use setting for creating and running tests.
-* The `Chai.js` library is also used for assertions and to send `HTTP` requests to the API.
+* The testing framework used is [Mocha.js](https://mochajs.org/), it provides a simple and easy to use setting for creating and running tests.
+* The [Chai.js](https://www.chaijs.com/) library is also used for assertions and to send `HTTP` requests to the API.
 * Combined the two packages allow for tests to be created quickly and for them to be easily run to verify the functionality of the API.
 
 ## Application Setup
@@ -63,7 +63,7 @@
 * Documentation for the API was written using the `OpenAPI/Swagger 2.0` specification and generated using [Spectacle](https://github.com/sourcey/spectacle).
 * The `JSON` file that was used to generate the docs can be found in the `docs` directory of this project under the name `api.json`.
 * The `index.html` file can also be found in the `docs` folder.
-* The docs are hosted using [GitHub Pages](https://pages.github.com/) and can be found at `https://frank-k.github.io/shopify-challenge/`
+* The docs are hosted using [GitHub Pages](https://pages.github.com/) and can be found [here](https://frank-k.github.io/shopify-challenge/)
 
 
 ## Testing
