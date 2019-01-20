@@ -43,11 +43,19 @@
 * In the header of each request there must be an API key provided under `X-API-KEY`, this key will be validated against the key stored in the `.env` file on the server.
 * If no key is provided or thek key provided is invalid the API immediately returns a `401` response.
 * The security measure is implemented as global middlewear that is applied to every request.
+* As another form of security all user input is sanitized before being used in SQL queries.
+* This is to prevent SQL injection attacks.
 
 ### Testing Framework
 * The testing framework used is [Mocha.js](https://mochajs.org/), it provides a simple and easy to use setting for creating and running tests.
 * The [Chai.js](https://www.chaijs.com/) library is also used for assertions and to send `HTTP` requests to the API.
 * Combined the two packages allow for tests to be created quickly and for them to be easily run to verify the functionality of the API.
+
+### Constants
+
+* To store the constants for the API the [dotenv](https://www.npmjs.com/package/dotenv) package is used.
+* Normally the `.env` file shouldn't be commited to the version control, but to make the setup process easier it has been committed.
+* All the constants used in the application have been listed without their values.
 
 ## Application Setup
 
