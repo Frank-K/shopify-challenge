@@ -24,7 +24,7 @@ describe('Routes', function() {
     it('should return 200 with ALL items when api key is sent in header', function(done) {
       chai.request(app)
           .get('/product/all')
-          .set('X-API-KEY', 'atLgzBRp4eHn90Dntx393n2QPlzrVscO')
+          .set('X-API-KEY', process.env.API_KEY)
           .end(function(err, res) {
             expect(res).to.have.status(200);
             expect(res.body).with.lengthOf(6);
@@ -35,7 +35,7 @@ describe('Routes', function() {
     it('should return 200 with ALL AVAILABLE items', function(done) {
       chai.request(app)
           .get('/product/all?available=true')
-          .set('X-API-KEY', 'atLgzBRp4eHn90Dntx393n2QPlzrVscO')
+          .set('X-API-KEY', process.env.API_KEY)
           .end(function(err, res) {
             expect(res).to.have.status(200);
             expect(res.body).with.lengthOf(5);
@@ -49,7 +49,7 @@ describe('Routes', function() {
     it('should return 200 with ALL items when value for available query is invalid', function(done) {
       chai.request(app)
           .get('/product/all?available=invalid')
-          .set('X-API-KEY', 'atLgzBRp4eHn90Dntx393n2QPlzrVscO')
+          .set('X-API-KEY', process.env.API_KEY)
           .end(function(err, res) {
             expect(res).to.have.status(200);
             expect(res.body).with.lengthOf(6);
@@ -60,7 +60,7 @@ describe('Routes', function() {
     it('should return 200 with ALL items when query is invalid', function(done) {
       chai.request(app)
           .get('/product/all?invalid=true')
-          .set('X-API-KEY', 'atLgzBRp4eHn90Dntx393n2QPlzrVscO')
+          .set('X-API-KEY', process.env.API_KEY)
           .end(function(err, res) {
             expect(res).to.have.status(200);
             expect(res.body).with.lengthOf(6);
@@ -83,7 +83,7 @@ describe('Routes', function() {
     it('should return 200 with item when valid id is given', function(done) {
       chai.request(app)
           .get('/product/1')
-          .set('X-API-KEY', 'atLgzBRp4eHn90Dntx393n2QPlzrVscO')
+          .set('X-API-KEY', process.env.API_KEY)
           .end(function(err, res) {
             expect(res).to.have.status(200);
             expect(res.body['title']).to.equal('T-Shirt');
@@ -96,7 +96,7 @@ describe('Routes', function() {
     it('should return 200 with empty array when id doesn\'t exist', function(done) {
       chai.request(app)
           .get('/product/20')
-          .set('X-API-KEY', 'atLgzBRp4eHn90Dntx393n2QPlzrVscO')
+          .set('X-API-KEY', process.env.API_KEY)
           .end(function(err, res) {
             expect(res).to.have.status(200);
             expect(res.body).to.be.empty;
@@ -107,7 +107,7 @@ describe('Routes', function() {
     it('should return 200 with empty array when id is invalid', function(done) {
       chai.request(app)
           .get('/product/asdf')
-          .set('X-API-KEY', 'atLgzBRp4eHn90Dntx393n2QPlzrVscO')
+          .set('X-API-KEY', process.env.API_KEY)
           .end(function(err, res) {
             expect(res).to.have.status(200);
             expect(res.body).to.be.empty;
@@ -131,17 +131,11 @@ describe('Routes', function() {
     it('should return 200 with success when valid data is sent', function(done) {
       chai.request(app)
           .post('/purchase')
-          .set('X-API-KEY', 'atLgzBRp4eHn90Dntx393n2QPlzrVscO')
+          .set('X-API-KEY', process.env.API_KEY)
           .send({id: 2})
           .end(function(err, res) {
             expect(res).to.have.status(200);
             expect(res.body.success).to.equal(1);
-
-            // pool.query('SELECT * from products WHERE id=2', function (error, results, fields) {
-            //   expect(results[0].inventory_count).to.equal(4);
-            //   done();
-            // });
-
             done();
           });
     });
@@ -149,17 +143,11 @@ describe('Routes', function() {
     it('should return 400 with not successful when invalid id is sent', function(done) {
       chai.request(app)
           .post('/purchase')
-          .set('X-API-KEY', 'atLgzBRp4eHn90Dntx393n2QPlzrVscO')
+          .set('X-API-KEY', process.env.API_KEY)
           .send({id: 20})
           .end(function(err, res) {
             expect(res).to.have.status(400);
             expect(res.body.success).to.equal(0);
-
-            // pool.query('SELECT * from products WHERE id=2', function (error, results, fields) {
-            //   expect(results[0].inventory_count).to.equal(4);
-            //   done();
-            // });
-
             done();
           });
     });
@@ -167,17 +155,11 @@ describe('Routes', function() {
     it('should return 400 with not successful when invalid key is sent in body', function(done) {
       chai.request(app)
           .post('/purchase')
-          .set('X-API-KEY', 'atLgzBRp4eHn90Dntx393n2QPlzrVscO')
+          .set('X-API-KEY', process.env.API_KEY)
           .send({invalid: 1})
           .end(function(err, res) {
             expect(res).to.have.status(400);
             expect(res.body.success).to.equal(0);
-
-            // pool.query('SELECT * from products WHERE id=2', function (error, results, fields) {
-            //   expect(results[0].inventory_count).to.equal(4);
-            //   done();
-            // });
-
             done();
           });
     });
@@ -185,17 +167,11 @@ describe('Routes', function() {
     it('should return 400 with not successful when invalid key and id is sent in body', function(done) {
       chai.request(app)
           .post('/purchase')
-          .set('X-API-KEY', 'atLgzBRp4eHn90Dntx393n2QPlzrVscO')
+          .set('X-API-KEY', process.env.API_KEY)
           .send({invalid: 'invalid'})
           .end(function(err, res) {
             expect(res).to.have.status(400);
             expect(res.body.success).to.equal(0);
-
-            // pool.query('SELECT * from products WHERE id=2', function (error, results, fields) {
-            //   expect(results[0].inventory_count).to.equal(4);
-            //   done();
-            // });
-
             done();
           });
     });
@@ -203,17 +179,11 @@ describe('Routes', function() {
     it('should return 400 with not successful when item with no inventory is purchased', function(done) {
       chai.request(app)
           .post('/purchase')
-          .set('X-API-KEY', 'atLgzBRp4eHn90Dntx393n2QPlzrVscO')
+          .set('X-API-KEY', process.env.API_KEY)
           .send({id: 6})
           .end(function(err, res) {
             expect(res).to.have.status(400);
             expect(res.body.success).to.equal(0);
-
-            // pool.query('SELECT * from products WHERE id=2', function (error, results, fields) {
-            //   expect(results[0].inventory_count).to.equal(4);
-            //   done();
-            // });
-
             done();
           });
     }); 
