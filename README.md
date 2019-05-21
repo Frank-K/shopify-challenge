@@ -1,5 +1,7 @@
 # Shopify Developer Challenge 2019
 
+> Take a look [Shop-API](https://github.com/Frank-K/Shop-API) for an updated version of this project.
+
 ## Thought Process / Design Decisions
 
 ### Framework Choice
